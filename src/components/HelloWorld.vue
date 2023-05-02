@@ -33,13 +33,13 @@ const count = ref(0)
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
 
-<!-- <component name="Message" lang="html" >
+<component name="Message" lang="html" >
   <template>
-  this is a message
+  this is a message nice
   </template>
   <script setup lang="ts"> 
   </script>
-</component> -->
+</component>
 
 <style scoped>
 .read-the-docs {
