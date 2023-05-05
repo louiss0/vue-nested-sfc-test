@@ -2,8 +2,8 @@ lockfileVersion: '6.0'
 
 dependencies:
   vite-plugin-vue-nested-sfc:
-    specifier: ^0.0.4
-    version: 0.0.4(@vitejs/plugin-vue@4.2.1)(vite@4.3.4)(vue@3.2.47)
+    specifier: ^0.0.5
+    version: 0.0.5(@vitejs/plugin-vue@4.2.1)(vite@4.3.4)(vue@3.2.47)
   vue:
     specifier: ^3.2.47
     version: 3.2.47
