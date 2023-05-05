@@ -48,7 +48,7 @@ Example.emits = ["alertText"]
       <code>components/HelloWorld.vue</code> to test HMR
     </p>
   </div>
-
+  <component :is=""  />
   <input type="text">
   <p>
     Check out
