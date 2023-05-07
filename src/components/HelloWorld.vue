@@ -40,15 +40,17 @@ Example.emits = ["alertText"]
 <template>
   <h1>{{ msg }}</h1>
   <Message word="nice" />
-<Example text=""  @alertText=""   />
+  <Example text=""  @alertText=""   />
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
     </p>
   </div>
-  <component :is=""  />
+  <IncrementButton  
+    :count="count"
+    @countEmittedWithIncrementedValue="(value)=>count = value" 
+  />
   <input type="text">
   <p>
     Check out
@@ -64,7 +66,41 @@ Example.emits = ["alertText"]
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
 
-<component name="Message" lang="html" >
+<component name="increment-button" lang="vue">
+  
+  <script lang="ts" setup>
+
+    defineProps({
+      count:{
+        type: Number,
+        required:true
+      }
+    })
+
+    defineEmits({
+      countEmittedWithIncrementedValue:(value:number) => typeof value === "number", 
+    })
+
+  </script>
+
+  <template>
+      <button type="button" @click="$emit('countEmittedWithIncrementedValue', count + 1) ">
+      <!-- This will not work  <Text />  -->
+       {{ count }}
+      </button>
+  </template>
+
+</component>
+
+<component name="text" lang="vue" >
+  <template>
+    Count is
+  </template>
+</component>
+
+
+<component name="Message" lang="vue">
+  
   <script setup lang="ts"> 
   
   const message = "This is a message"
@@ -72,36 +108,17 @@ Example.emits = ["alertText"]
   defineProps({
     word:{
       type:String,
-      required:true,
-      validator:(value:string)=> {
-          const message = "This is a message"
-
-          const listofWordsInMessage = message.toLowerCase().split(/\s/)
-
-          if(listofWordsInMessage.includes(value.toLowerCase())) {
-
-            throw new Error(`
-            The word is not suppossed to be ${listofWordsInMessage.join(",")}.
-            They make up the message. 
-            `)
-          }
-
-          return true
-
-      } 
+      required:true, 
     }
   })
 
   </script>
+
   <template>
     <button>
       {{ message }} {{ word }}
     </button>
   </template>
+
 </component>
 
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
-</style>
