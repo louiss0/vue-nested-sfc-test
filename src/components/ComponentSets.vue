@@ -1,19 +1,10 @@
 
-<script lang="ts" setup>
-</script>
+<template class=""></template>
 
-<component name="text-one" lang="vue">
-
-<template>
-    This is text one
-</template>
-
+<component export name="text-one" >
+    <template>This is text one</template>
 </component>
 
-
-<component name="text-two" lang="vue">
-<template>
-    This is text two.
-</template>
-
+<component export name="text-two" >
+    <template>This is text two.</template>
 </component>
