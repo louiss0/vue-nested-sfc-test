@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue';
 
-import { TextOne, TextTwo } from './components/ComponentSets.vue';
+import { TextTwo, TextOne } from './components/ComponentSets.vue';
 
 </script>
 
@@ -14,10 +14,25 @@ import { TextOne, TextTwo } from './components/ComponentSets.vue';
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <TextOne word="THis is text one" />
-  <TextTwo />
   <HelloWorld msg="Vite + Vue" />
+  <TextOne word="logo" />
+  <TextTwo />
+  <Randy />
 </template>
+
+<component lang="vue" name="randy" >
+    <template>
+      I'm randy
+      <!-- <Lyn /> This won't work -->
+    </template>
+</component>
+
+<component lang="vue" name="lyn" >
+    <template>
+      I'm lyn
+    </template>
+</component>
+
 
 <style scoped>
 .logo {
