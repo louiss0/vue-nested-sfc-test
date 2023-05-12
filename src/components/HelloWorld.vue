@@ -1,46 +1,27 @@
-<script setup lang="tsx">
-import { FunctionalComponent, ref } from 'vue'
+<script setup lang="ts">
+import {  ref } from 'vue'
+import z from 'zod';
 
-defineProps<{ msg: string }>()
+defineProps({
+  msg: {
+    type: String,
+    required:true,
+    validator: (value) =>
+      !!z.string()
+          .transform((value) => value.replace(/\s/g, ''))
+          .pipe(z.string().min(4).max(25)).parse(value)
+  }
+})
 
 const count = ref(0)
  
-
-
-type Events = { alertText(word: string): void; onThis(): string;  }
-
-type ObjectThatRejectsOn<T extends Record<string, unknown>> = Omit<T,`on${string}`>   
-
-type CreateObjectPrefixedWithOnAndCapitalized<T extends Record<string, unknown>> = {
-  [K in keyof ObjectThatRejectsOn<T> as `on${Capitalize<K & string>}`]:ObjectThatRejectsOn<T>[K]
-}
-type ObjectWithOnlyFunctions = Record<string, (...args: Array<any>) => any>; 
-
-type ProperFunctionalComponent< T extends Record<string, unknown>, U extends ObjectWithOnlyFunctions> =
-  FunctionalComponent<
-    Omit<T, keyof U> & CreateObjectPrefixedWithOnAndCapitalized<U>,
-    ObjectThatRejectsOn<U>
-  >
-
-
-const Example: ProperFunctionalComponent<{ text: string;  }, Events> = (props, { emit }) => (
-  <button onClick={() => emit("alertText", props.text)} >
-    Click to get a text alert 
-  </button>
-)
-
-Example.props = ['text']
-
-Example.emits = ["alertText"]
-
 
 </script>
 
 
 <template>
-  <h1>{{ msg }}</h1>
+  <h1> {{ msg }}</h1>
   <Message word="nice" />
-  <Example text=""  @alertText=""   />
   <div class="card">
     <p>
       Edit
@@ -48,7 +29,8 @@ Example.emits = ["alertText"]
     </p>
   </div>
   <IncrementButton  
-    :count="count"
+    :count="10"
+    
     @countEmittedWithIncrementedValue="(value)=>count = value" 
   />
   <input type="text">
@@ -66,14 +48,18 @@ Example.emits = ["alertText"]
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
 
-<component name="increment-button" lang="vue">
+<component name="increment-button" lang="html">
   
-  <script lang="ts" setup>
+<script lang="ts" setup>
 
-    defineProps({
-      count:{
-        type: Number,
-        required:true
+  import z from 'zod';
+
+  defineProps({
+    count:{
+      type: Number,
+      required:true,
+      validator:(value) => !!z.number().min(0).max(10).parse(value)
+        
       }
     })
 
@@ -85,27 +71,23 @@ Example.emits = ["alertText"]
 
   <template>
       <button type="button" @click="$emit('countEmittedWithIncrementedValue', count + 1) ">
-      <!-- This will not work  <Text />  -->
-       {{ count }}
+    Count is
+
+        {{ count }}
       </button>
   </template>
 
 </component>
 
-<component name="text" lang="vue" >
-  <template>
-    Count is
-  </template>
-</component>
 
 
-<component name="Message" lang="vue">
+<component name="message" lang="html">
   
   <script setup lang="ts"> 
   
   const message = "This is a message"
 
-  defineProps({
+   defineProps({
     word:{
       type:String,
       required:true, 

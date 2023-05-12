@@ -1,8 +1,6 @@
 
-<script lang="ts" setup>
-</script>
-
-<component name="text-one" lang="vue">
+<template></template>
+<component name="text-one" lang="vue" export>
 
 <template>
     This is text one
@@ -11,7 +9,7 @@
 </component>
 
 
-<component name="text-two" lang="vue">
+<component name="text-two" lang="vue" export>
 <template>
     This is text two.
 </template>
