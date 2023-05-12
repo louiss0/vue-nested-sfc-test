@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import {  ref } from 'vue'
+import { ref } from 'vue'
 import z from 'zod';
 
 defineProps({
   msg: {
     type: String,
-    required:true,
+    required: true,
     validator: (value) =>
       !!z.string()
-          .transform((value) => value.replace(/\s/g, ''))
-          .pipe(z.string().min(4).max(25)).parse(value)
+        .transform((value) => value.replace(/\s/g, ''))
+        .pipe(z.string().min(4).max(25)).parse(value)
   }
 })
 
 const count = ref(0)
- 
+
 
 </script>
 
@@ -28,19 +28,15 @@ const count = ref(0)
       <code>components/HelloWorld.vue</code> to test HMR
     </p>
   </div>
-  <IncrementButton  
-    :count="10"
-    
-    @countEmittedWithIncrementedValue="(value)=>count = value" 
-  />
+  <IncrementButton :count="10" @countEmittedWithIncrementedValue="(value) => count = value" />
   <input type="text">
   <p>
     Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
+    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">create-vue</a>, the official Vue + Vite starter
   </p>
+
   <p>
+
     Install
     <a href="https://github.com/vuejs/language-tools" target="_blank">Volar</a>
     in your IDE for a better DX
@@ -49,45 +45,44 @@ const count = ref(0)
 </template>
 
 <component name="increment-button" lang="html">
-  
-<script lang="ts" setup>
+  <script lang="ts" setup>
+    import z from 'zod';
 
-  import z from 'zod';
-
-  defineProps({
-    count:{
-      type: Number,
-      required:true,
-      validator:(value) => !!z.number().min(0).max(10).parse(value)
+            defineProps({
+              count:{
+                type: Number,
+                required:true,
+                validator:(value) => 
+                !!z.number()
+                  .min(0)
+                  .max(10)
+                  .parse(value),
         
-      }
-    })
+                }
+              })  
 
-    defineEmits({
-      countEmittedWithIncrementedValue:(value:number) => typeof value === "number", 
-    })
+              defineEmits({
+                countEmittedWithIncrementedValue:(value:number) => typeof value === "number", 
+              })
 
   </script>
 
   <template>
-      <button type="button" @click="$emit('countEmittedWithIncrementedValue', count + 1) ">
-    Count is
+    <button type="button" @click="$emit('countEmittedWithIncrementedValue', count + 1) ">
+      Count is
 
-        {{ count }}
-      </button>
+      {{ count }}
+    </button>
   </template>
-
 </component>
 
 
-
-<component name="message" lang="html">
+<component name="message" lang="vue">
   
   <script setup lang="ts"> 
-  
   const message = "This is a message"
-
-   defineProps({
+    
+  defineProps({
     word:{
       type:String,
       required:true, 
